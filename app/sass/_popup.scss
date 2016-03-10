@@ -51,10 +51,9 @@
     &:after,
     &:before {
       position: absolute;
-      top: 50px;
+      top: 50%;
       left: 0;
       right: 0;
-      width: 3px;
       height: 3px;
       background: $popup-close-back;
       transform-origin: center;
