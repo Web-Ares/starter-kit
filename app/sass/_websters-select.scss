@@ -6,16 +6,48 @@
   position: relative;
   width: 200px;
   height: 22px;
-  border: 1px solid #000;
+  border: 1px solid $websters-select-border;
 
-  &:after{
+  &_opened {
+
+    .websters-select__arrow {
+      transform: rotate(180deg);
+    }
+
+  }
+
+  &__arrow{
     position: absolute;
     top: 0;
     right: 0;
     bottom: 0;
     width: 20px;
-    border-left: 1px solid #000;
-    content: '';
+    transform-origin: center;
+    -webkit-transition: -webkit-transform 200ms ease-in-out;
+    transition: transform 200ms ease-in-out;
+
+    &:after,
+    &:before {
+      position: absolute;
+      top: 9px;
+      width: 10px;
+      height: 2px;
+      border-radius: 2px;
+      background: $websters-select-border;
+      content: '';
+    }
+
+    &:after {
+      left: 4px;
+      transform: rotate(70deg);
+
+    }
+
+    &:before {
+      right: 3px;
+      transform: rotate(-70deg);
+
+    }
   }
 
   &__item {
@@ -56,7 +88,8 @@
     position: absolute;
     z-index: 10;
     box-sizing: border-box;
-    border: 1px solid #000;
+    border: 1px solid $websters-select-border;
+    background: $websters-select-popup-back;
 
     ul {
       z-index: 1;
@@ -67,9 +100,14 @@
       overflow: hidden;
       cursor: pointer;
 
+      &:hover {
+        color: $websters-select-popup-item-active-color;
+        background: $websters-select-popup-item-active-back;
+      }
+
       &.active {
-        color: #fff;
-        background: #f00;
+        color: $websters-select-popup-item-active-color !important;
+        background: $websters-select-popup-item-active-back !important;
       }
 
     }
