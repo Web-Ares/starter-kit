@@ -120,7 +120,7 @@ gulp.task('watch', function() {
     gulp.watch(paths.images,    ['images',  browserSync.reload]);
     gulp.watch(paths.pictures,    ['pictures',  browserSync.reload]);
     gulp.watch(paths.fonts,    ['fonts']);
-    gulp.watch(paths.styles,    ['styles']);
+    gulp.watch(paths.styles,    ['styles', browserSync.reload]);
     gulp.watch(paths.vendorStyles,    [ 'vendorStyles' ]);
     gulp.watch(paths.views,     ['views',   browserSync.reload]);
 });
