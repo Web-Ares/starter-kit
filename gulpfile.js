@@ -46,7 +46,8 @@ gulp.task('clean', function (cb) {
 
 gulp.task('serve', ['watch'], function() {
     browserSync.init({
-        server: 'dist'
+        server: 'dist',
+        port: 3010
     });
 });
 
