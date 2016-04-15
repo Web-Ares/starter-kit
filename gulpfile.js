@@ -29,6 +29,12 @@ var paths = {
                 'app/js/jquery.popup.js',
                 'app/js/jquery.websters-select.js'
             ]
+        },
+        {
+            dist: 'tabs.min.js',
+            contains: [
+                'app/js/jquery.tabs.js'
+            ]
         }
     ],
     vendorScripts: 'app/js/vendors/**/*.js',
