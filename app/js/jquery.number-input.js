@@ -14,8 +14,6 @@
             },
             _onEvents = function () {
                 _body.on( 'keypress', '.number input', function (event) {
-                    console.log( this );
-                    console.log($( this ).val().indexOf( '.' ) != -1 );
                     if ( ( event.which != 46 || $( this ).val().indexOf( '.' ) != -1 ) && ( event.which < 48 || event.which > 57 ) ) {
                         event.preventDefault();
                     }
