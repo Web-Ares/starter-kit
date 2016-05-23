@@ -2,103 +2,138 @@
 
     $( function() {
 
-        $.each( $( '.tabs' ), function() {
-            new Tabs ( $( this ) );
+        $( '.tabs' ).each( function(){
+            new Tabs( {
+                obj: $( this ),
+                showType: 2, // if "showType = 0" tabs will be without any animations
+                activeIndex: function( index ){
+                    console.log( index )
+                 }
+            } );
         } );
 
     } );
 
-    var Tabs = function( obj ) {
+    var Tabs = function( params ) {
 
         //private properties
         var _self = this,
-            _obj = obj,
+            _obj = params.obj,
+            _showType = params.showType,
+            _callbackActiveIndex = params.activeIndex,
             _window = $( window ),
-            _btn = _obj.find( 'dt'),
+            _tabsBtn = _obj.find( 'dt'),
             _tabsContent = _obj.find( 'dd'),
-            _flag = true;
+            _mobileScreen = true;
 
         //private methods
-        var _onEvents = function() {
+        var _addClassForAnimation = function() {
 
-                _btn.on( {
+                if( _showType == 1 ){
+
+                    _obj.addClass( 'tabs_animated1' );
+
+                } else if( _showType == 2 ){
+
+                    _obj.addClass( 'tabs_animated2' );
+
+                }
+
+            },
+            _onEvents = function()  {
+
+                _tabsBtn.on( {
                     click: function() {
+
                         if( _window.width() < 992 ) {
 
                             _slideContent( $( this) );
 
                         } else {
 
-                            _setClassActive( $( this) );
+                            _changeActiveTab( $( this) );
                             _setMinHeight( $( this) );
 
                         }
+
                     }
                 } );
 
                 _window.on( {
                     load: function () {
+
                         if( _window.width() >= 992 ) {
 
                             _setTopPos();
                             _setFirstActive();
-                            _flag = false;
+                            _mobileScreen = false;
 
                         } else {
 
-                            _flag = true
+                            _mobileScreen = true
 
                         }
+
                     },
                     resize: function() {
+
                         if( _window.width() >= 992 ) {
 
                             _setTopPos();
                             _setFirstActive();
-
-                            _flag = false;
+                            _mobileScreen = false;
 
                         } else {
 
                             _resetStyle();
-                            _flag = true
+                            _mobileScreen = true
 
                         }
+
                     }
                 } );
 
             },
             _init = function() {
+
                 _obj[ 0 ].obj = _self;
                 _onEvents();
+                _addClassForAnimation();
+
             },
             _setTopPos = function() {
+
                 _tabsContent.css( {
-                    top: _btn.eq( -1 ).position().top + _btn.eq( -1 ).innerHeight()
+                    top: _tabsBtn.eq( -1 ).position().top + _tabsBtn.eq( -1 ).innerHeight()
                 } );
+
             },
-            _setClassActive = function( elem ) {
+            _changeActiveTab = function( elem ) {
 
                 var curItem = elem,
-                    nextElem = curItem.next(),
-                    content = nextElem.find( '.tabs__content' );
+                    nextContent = curItem.next(),
+                    nextContentInner = nextContent.find( '.tabs__content' );
 
                 if( !curItem.hasClass( 'active' ) ) {
-                    _btn.removeClass( 'active' );
-                    _tabsContent.height( 0 );
 
+                    _tabsBtn.removeClass( 'active' );
+                    _tabsContent.height( 0 );
                     curItem.addClass( 'active' );
-                    nextElem.innerHeight( content.innerHeight() );
+                    nextContent.innerHeight( nextContentInner.innerHeight() );
                 }
+
+                _callbackActiveIndex( curItem.index() / 2 );
 
             },
             _setFirstActive = function() {
-                if( _flag ) {
 
-                    _btn.eq( 0 ).addClass( 'active' );
-                    _setMinHeight( _btn.eq( 0 ) );
+                if( _mobileScreen ) {
+
+                    _tabsBtn.eq( 0 ).addClass( 'active' );
+                    _setMinHeight( _tabsBtn.eq( 0 ) );
 
                 }
+
             },
             _setMinHeight = function( elem ) {
 
@@ -112,25 +147,29 @@
             _slideContent = function( elem ) {
 
                 var curItem = elem,
-                    nextElem = curItem.next(),
-                    content = nextElem.find( '.tabs__content' );
+                    nextContent = curItem.next(),
+                    nextContentInner = nextContent.find( '.tabs__content' );
 
                 if( !curItem.hasClass( 'active' ) ) {
-                    _btn.removeClass( 'active' );
-                    _tabsContent.removeAttr( 'style' );
 
+                    _tabsBtn.removeClass( 'active' );
+                    _tabsContent.removeAttr( 'style' );
                     curItem.addClass( 'active' );
-                    nextElem.height( content.innerHeight() );
+                    nextContent.height( nextContentInner.innerHeight() );
+
                 } else {
+
                     curItem.removeClass( 'active' );
-                    nextElem.removeAttr( 'style' );
+                    nextContent.removeAttr( 'style' );
                 }
 
             },
             _resetStyle = function() {
+
                 _obj.removeAttr( 'style' );
-                _btn.removeClass( 'active' );
+                _tabsBtn.removeClass( 'active' );
                 _tabsContent.removeAttr( 'style' );
+
             };
 
         _init();
