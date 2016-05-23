@@ -71,7 +71,7 @@
                 _wrap.removeClass( 'websters-select_opened' );
 
             },
-            _init = function(){
+            _constructor = function(){
                 _obj[ 0 ].obj = _self;
 
                 _addWrap();
@@ -208,7 +208,7 @@
         };
 
 
-        _init();
+        _constructor();
 
     };
 
