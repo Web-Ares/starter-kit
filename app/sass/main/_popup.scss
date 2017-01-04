@@ -1,16 +1,16 @@
 .popup {
-  display: block;
+  display: flex;
+  align-items: flex-start;
   opacity: 0;
-  overflow-y: scroll;
+  overflow-y: auto; 
   position: fixed;
   top: 0;
   left: 0;
   width: 0;
   height: 0;
+  padding: 0 15px;
   z-index: 10000;
-  padding-top: 40px;
-  background: $popup-back;
-  text-align: center;
+  background: rgba(200,205,215,.4);
   transition: opacity 500ms ease-in-out;
 
   &_opened {
@@ -21,30 +21,21 @@
 
   &_hide {
     opacity: 0;
-    width: 100%;
-    height: 100%;
-  }
-
-  &__wrap {
-    position: relative;
-    z-index: 2;
-    width: 527px;
-    margin: 0 auto;
-    padding-bottom: 40px;
+    width: 0;
+    height: 0;
   }
 
   &__content {
     display: none;
-    text-align: left;
-    padding: 20px 0;
+    position: relative;
   }
 
   &__close {
     position: absolute;
-    top: 17px;
+    top: 5px;
+    right: 5px;
     width: 15px;
     height: 15px;
-    right: 18px;
     text-indent: -5000px;
     cursor: pointer;
 
@@ -55,7 +46,7 @@
       left: 0;
       right: 0;
       height: 3px;
-      background: $popup-close-back;
+      background: #000;
       transform-origin: center;
       content: '';
     }
@@ -81,6 +72,29 @@
     top: -9999px;
     width: 100px;
     height: 100px;
+  }
+
+  // My popup
+  &__write {
+    flex-basis: 500px;
+    padding: 20px 0;
+    margin: auto;
+    outline: 1px solid #0f0;
+    text-align: center;
+  }
+  
+  &__write-field {
+    display: inline-block;
+    width: 40%;
+    height: 500px;
+    background:red;
+  }
+
+  &__read {
+    flex-basis: 500px;
+    padding: 20px 0;
+    margin: auto;
+    border: 3px solid #0f0;
   }
 
 }
